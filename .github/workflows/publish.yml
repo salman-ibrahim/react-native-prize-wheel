@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+      
+      - name: Update npm to latest
+        run: npm install -g npm@latest
 
       - name: Configure Git
         run: |
@@ -70,7 +73,7 @@ jobs:
 
       - name: Publish to NPM
         if: steps.version.outputs.bump != 'none'
-        run: npm publish --provenance --access public
+        run: npm publish --access public
 
       - name: Create GitHub Release
         if: steps.version.outputs.bump != 'none'
