@@ -1,0 +1,46 @@
+{
+  "name": "react-native-prize-wheel",
+  "version": "0.1.0",
+  "description": "A highly customizable, performant wheel of fortune component for React Native",
+  "main": "src/index.js",
+  "types": "src/types/index.d.ts",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "wheel",
+    "fortune",
+    "spin",
+    "game",
+    "lottery",
+    "prize",
+    "wheel-of-fortune",
+    "expo",
+    "spin-wheel",
+    "lucky-wheel",
+    "roulette"
+  ],
+  "author": "Salman Ibrahim",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salman-ibrahim/react-native-prize-wheel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/salman-ibrahim/react-native-prize-wheel/issues"
+  },
+  "homepage": "https://github.com/salman-ibrahim/react-native-prize-wheel#readme",
+  "peerDependencies": {
+    "react": ">=18.3.1",
+    "react-native": ">=0.76.9",
+    "react-native-svg": ">=15.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
