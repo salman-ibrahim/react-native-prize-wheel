@@ -46,9 +46,12 @@ jobs:
           elif echo "$COMMIT_MSG" | grep -qiE "^(feat|feature|minor):"; then
             echo "bump=minor" >> $GITHUB_OUTPUT
             echo "Version bump: MINOR"
-          elif echo "$COMMIT_MSG" | grep -qiE "^(fix|patch|chore|docs|style|refactor|perf|test):"; then
+          elif echo "$COMMIT_MSG" | grep -qiE "^(fix|patch):"; then
             echo "bump=patch" >> $GITHUB_OUTPUT
             echo "Version bump: PATCH"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(chore|docs|style|refactor|perf|test):"; then
+            echo "bump=none" >> $GITHUB_OUTPUT
+            echo "No version bump - maintenance commit (chore/docs/style/refactor/perf/test)"
           else
             echo "bump=none" >> $GITHUB_OUTPUT
             echo "No version bump - commit message doesn't match conventional commits"
