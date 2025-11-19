@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Alert, ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Alert, ScrollView, Text } from 'react-native';
 import WheelOfFortune from '../src';
 
 /**
@@ -145,11 +145,6 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-// Simple Text component for the example
-const Text = ({ style, children }) => {
-  return <View style={style}><>{children}</></View>;
-};
 
 const styles = StyleSheet.create({
   container: {
