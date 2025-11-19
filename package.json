@@ -30,7 +30,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/salman-ibrahim/react-native-prize-wheel.git"
+    "url": "git+https://github.com/salman-ibrahim/react-native-prize-wheel.git"
   },
   "bugs": {
     "url": "https://github.com/salman-ibrahim/react-native-prize-wheel/issues"
