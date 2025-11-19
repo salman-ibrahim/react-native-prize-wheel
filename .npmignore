@@ -23,6 +23,7 @@ __tests__/
 # Examples and demos
 examples/
 demo/
+example/
 
 # Git
 .git/

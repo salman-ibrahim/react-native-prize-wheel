@@ -1,0 +1,87 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Determine version bump
+        id: version
+        run: |
+          # Get the last commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          
+          # Determine version bump type based on commit message
+          if echo "$COMMIT_MSG" | grep -qiE "^(BREAKING CHANGE|major):"; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+            echo "Version bump: MAJOR"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(feat|feature|minor):"; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+            echo "Version bump: MINOR"
+          elif echo "$COMMIT_MSG" | grep -qiE "^(fix|patch|chore|docs|style|refactor|perf|test):"; then
+            echo "bump=patch" >> $GITHUB_OUTPUT
+            echo "Version bump: PATCH"
+          else
+            echo "bump=none" >> $GITHUB_OUTPUT
+            echo "No version bump - commit message doesn't match conventional commits"
+          fi
+
+      - name: Bump version
+        if: steps.version.outputs.bump != 'none'
+        run: |
+          npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]"
+          
+      - name: Push version changes
+        if: steps.version.outputs.bump != 'none'
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
+          git push --tags
+
+      - name: Publish to NPM
+        if: steps.version.outputs.bump != 'none'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.version.outputs.bump != 'none'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.new_version }}
+          release_name: Release v${{ steps.version.outputs.new_version }}
+          body: |
+            Automated release for version ${{ steps.version.outputs.new_version }}
+            
+            Changes: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false

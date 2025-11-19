@@ -1,0 +1,8 @@
+{
+  "name": "Spin Wheel Example",
+  "slug": "spin-wheel-example",
+  "version": "1.0.0",
+  "plugins": [
+    "expo-asset"
+  ]
+}

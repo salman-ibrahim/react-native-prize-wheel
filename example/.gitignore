@@ -1,0 +1,4 @@
+node_modules/
+.expo
+.yarnrc
+package-lock.json
