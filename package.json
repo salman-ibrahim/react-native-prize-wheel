@@ -1,6 +1,6 @@
 {
   "name": "react-native-prize-wheel",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A highly customizable, performant wheel of fortune component for React Native",
   "main": "src/index.js",
   "types": "src/types/index.d.ts",
