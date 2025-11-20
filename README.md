@@ -2,6 +2,10 @@
 
 A highly customizable, performant, and visually appealing wheel of fortune component for React Native applications. Perfect for games, promotions, and interactive experiences.
 
+<p align="center">
+  <img src="./example/assets/example.gif" alt="Demo" />
+</p>
+
 ## Features ✨
 
 - 🎨 **Fully Customizable** - Colors, sizes, text, and more
