@@ -61,9 +61,13 @@ jobs:
           fi
 
       - name: Bump version
+        id: bump
         if: steps.version.outputs.bump != 'none'
         run: |
           npm version ${{ steps.version.outputs.bump }} -m "chore: bump version to %s [skip ci]"
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
           
       - name: Push version changes
         if: steps.version.outputs.bump != 'none'
@@ -81,10 +85,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.version.outputs.new_version }}
-          release_name: Release v${{ steps.version.outputs.new_version }}
+          tag_name: v${{ steps.bump.outputs.new_version }}
+          release_name: Release v${{ steps.bump.outputs.new_version }}
           body: |
-            Automated release for version ${{ steps.version.outputs.new_version }}
+            Automated release for version ${{ steps.bump.outputs.new_version }}
             
             Changes: ${{ github.event.head_commit.message }}
           draft: false
